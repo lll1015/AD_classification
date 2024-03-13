@@ -14,7 +14,7 @@ class EarlyStopping:
 
         if self.best_score is None:
             self.best_score = score
-            self.save_checkpoint(val_loss)
+            self.save_checkpoint(val_loss, model)
         elif score < self.best_score + self.delta:
             self.counter += 1
             print(f'EarlyStopping counter: {self.counter} out of {self.patience}')
@@ -25,7 +25,7 @@ class EarlyStopping:
             self.save_checkpoint(val_loss, model)
             self.counter = 0
 
-    def save_checkpoint(self, val_loss,model):
+    def save_checkpoint(self, val_loss , model):
         '''Saves model when validation loss decrease.'''
         torch.save(model.state_dict(), 'best_model.pth')
         logging.info(f'Validation loss decreased. Model saved.')
